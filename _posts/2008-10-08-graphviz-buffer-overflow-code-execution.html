@@ -1,0 +1,36 @@
+---
+layout: post
+title: Graphviz Buffer Overflow Code Execution
+date: '2008-10-08T20:30:00.012+02:00'
+author: Roee Hay
+tags: 
+modified_time: '2008-10-09T16:34:19.082+02:00'
+thumbnail: http://lh6.ggpht.com/roeehay/SOz8M6Ki5LI/AAAAAAAAAF4/UzxrCHsQM2M/s72-c/image_thumb2.png?imgmax=800
+---
+
+<p>Graphviz just released a patch to a critical security issue I reported to them.    <br />The following is the advisory:</p> <h4>Background</h4>Graphviz is an open-source multi-platform graph visualization software. It takes a description of graphs in a simple text format (DOT language), and makes diagrams out of it in several useful formats (including SVG).<h4>Description</h4>A vulnerability exists in Graphviz's parsing engine which makes it possible to overflow a globally allocated array and corrupt memory by doing so.
+{% highlight C %}
+parser.y (Graphviz 2.20.2):
+34:  static Agraph_t *Gstack[32];
+35:  static int GSP; 
+45:   static void push_subg(Agraph_t *g)
+46:  {
+47:    G = Gstack[GSP++] = g;
+48:  }
+{% endhighlight %}
+As it can be seen, no bounds check is performed by the <font face="Consolas" color="#0000ff">push_subg</font> procedure, allowing one to overflow <font face="Consolas" color="#0000ff">Gstack</font> by pushing more than 32 (<font face="Consolas" color="#0000ff">Agraph_t *</font>) elements. <h4>Impact/Severity</h4>A malicious user can achieve an <em>arbitrary code execution</em> by creating a specially crafted DOT file and convince the victim to render it using Graphviz.     <br />    <br />Below is a screenshot of a successful exploitation. When the&#160; malicious DOT file is rendered, a shellcode which calls the MessageBoxA API is executed:<br><br><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="337" alt="image" src="/images/graphviz.png" width="428" border="0" /></a> </p>  <h4>Affected versions</h4>Graphviz 2.20.2 is affected by this vulnerability. Older versions are probably affected as well.<h4>Workaround</h4>Version 2.20.3 has been released in order to address this issue. A bounds check has been added in order to avoid an overflow.</p>  
+{% highlight C %}
+parser.y (Graphviz 2.20.3):
+34: #define GSTACK_SIZE 64
+35: static Agraph_t *Gstack[GSTACK_SIZE];
+36: static int GSP;
+45:
+46: static void push_subg(Agraph_t *g) 
+47: {
+48:   if (GSP &gt;= GSTACK_SIZE) {
+49:     agerr (AGERR, &quot;Gstack overflow in graph parser\n&quot;); exit(1);
+50:   } 
+51:   G = Gstack[GSP++] = g;
+52: }
+{% endhighlight %}
+<h4>Acknowledgements</h4>I would like to thank the Graphviz team (Stephen C. North, John Ellson, Emden R. Gansner and others) for their quick responses and fix (it took them only a day since my disclosure to release a patch!).</p>

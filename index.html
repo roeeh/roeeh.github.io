@@ -1,1 +1,20 @@
-foo 
+---
+layout: default
+---
+<div class="home">
+	<section>
+		<h2 class="smallcap">about</h2>
+		<p>Roee Hay / <a href="https://twitter.com/roeehay">@roeehay</a> / Opinions are my own</p>
+	</section>
+	<section>
+		<h2 class="smallcap">posts</h2>
+		<ul class="post-list">
+			{% for post in site.posts %}
+			<li>
+				<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
+				<a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</section>
+</div>

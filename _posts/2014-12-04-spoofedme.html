@@ -1,0 +1,10 @@
+---
+layout: post
+title: SpoofedMe
+date: '2014-12-04T18:35:00.005+02:00'
+author: Roee Hay
+tags: 
+modified_time: '2014-12-04T18:35:48.516+02:00'
+---
+
+Or Peles (<a href="https://twitter.com/peles_o">@peles_o</a>) and I have discovered an impersonation attack on social login protocols&nbsp;(e.g. OAuth 1.0 / 2.0 &nbsp;used for authentication) based on a combination&nbsp;of an implementation vulnerability existing in some identity providers&nbsp;(e.g. LinkedIn, which has fixed the issue) and a known design problem&nbsp;in the relying (third-party) website side.&nbsp;<br /><br />The identity provider vulnerability is allowing the use of unverified&nbsp;email in the social login authentication process, making it possible&nbsp;for an adversary to fake ownership of an email address and log into a&nbsp;victim's account.<br /><br />By exploiting the vulnerability we successfully impersonated a&nbsp;Slashdot (test) account using the (now patched) LinkedIn provider:<br  /><br /><iframe width="560" height="315" src="https://www.youtube.com/embed/kC0s3S00Dmk" frameborder="0" allowfullscreen></iframe><br /><br /><br  />More details are available at:<br />1. <a href="http://securityintelligence.com/spoofedme-social-login-attack-discovered-by-ibm-x-force-researchers">Blog post</a>&nbsp;<br  />2. <a href="http://www.slideshare.net/ibmsecurity/spoofed-me-socialloginattack">Whitepaper</a><br />

@@ -1,0 +1,18 @@
+# Site settings
+title: securityresear.ch
+baseurl: ""
+url: "https://securityresear.ch/"
+
+# Build settings
+kramdown:
+  input: GFM
+permalink: pretty
+
+# Third-party services
+# just leave someone empty to disable it
+google_analytics: UA-4394117-4
+disqus_shortname: 
+
+twitter_username: roeehay
+footer-links:
+    twitter: "@roeehay"

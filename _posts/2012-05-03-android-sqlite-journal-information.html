@@ -1,0 +1,11 @@
+---
+layout: post
+title: Android SQLite Journal Information Disclosure (CVE-2011-3901)
+date: '2012-05-03T16:11:00.001+03:00'
+author: Roee Hay
+tags: 
+modified_time: '2012-05-03T16:12:45.435+03:00'
+thumbnail: https://img.youtube.com/vi/oCXLHjmH5rY/default.jpg
+---
+
+Recently I detected a security vulnerability in Android’s SQLite engine which can be exploited by a non-privileged application in order to disclose sensitive information. It enables a malicious application to eavesdrop on database activities performed by any other application using SQLite, allowing unauthorized access to information such as URL history, messages, and contacts.<br /><br />The complete advisory can be found <a href="http://bit.ly/K0W0pT">here</a>.<br /><br />Demo of the PoC:<br /><iframe frameborder="0" height="315" src="http://www.youtube.com/embed/oCXLHjmH5rY" width="420"></iframe>  <br /><br />I would like to thank the Android Security Team for the efficient and quick way in which they handled this security issue.

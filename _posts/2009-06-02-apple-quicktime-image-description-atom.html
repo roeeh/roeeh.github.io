@@ -1,0 +1,54 @@
+---
+layout: post
+title: Apple QuickTime Image Description Atom Sign Extension Memory Corruption
+date: '2009-06-02T10:26:00.004+03:00'
+author: Roee Hay
+tags: 
+modified_time: '2009-06-03T21:04:48.908+03:00'
+---
+
+Apple has just released a new version of QuickTime. This version includes a fix to a vulnerability I reported to them back in March. <br><br>I would like to thank Apple for the efficient way in which they handled this security issue.The following is the advisory.<h4>INTRODUCTION</h4>According to QuickTime's specification, The sample description atom (STSD) stores information that allows QuickTime to decode samples in the media. It has the following structure:  
+{% highlight asm %}
+0   DWORD   Size
+4   DWORD   Type
+8   BYTE    Version
+9   BYTE[3] FLAGS
+12  DWORD   Number of entries
+16  DWORD   Sample description table
+{% endhighlight %}
+The structure of each entry in the sample description table varies by the media type, however the first four fields are the same for all media types: 
+{% highlight asm %}
+0   DWORD   Sample description size
+4   DWORD   Data format
+6   BYTE[6] Reserved
+12  WORD    Data reference index
+{% endhighlight %}
+These four fields may be followed by additional data specific to the media type and data format. <br>For video media, the general sample description format is extended by the following structure:
+{% highlight asm %}14 WORD     Version
+6 WORD     Revision level
+18 DWORD    Vendo
+22 DWORD    Temporal quality
+26 DWORD    Spatial quality
+30 WORD     Width
+32 WORD     Height
+34 DWORD    Horizontal resolution
+38 DWORD    Vertical resolutio
+42 DWORD    Data size
+46 WORD     Frame count
+48 BYTE[32] Compressor name
+80 WORD     Depth
+82 WORD     Color table ID
+{% endhighlight %}
+<h4>VULNERABILITY DETAILS</h4>When the data format field (offset 4 of the sample description table extension) is 'RPZA' (Apple Video), it is possible to trigger a sign extension vulnerability which leads to a buffer underflow. The following is the faulty sign extended MOV:
+{% highlight asm %}
+MOVSX ECX,WORD PTR SS:[ESP+4C]
+{% endhighlight %}
+[ESP+4C] contains a user controlled input, which is equal to <br>"((width+(4-width%4))*4 &amp; 0xFFFF" where 'width' is taken from the RPZA sample description entry (offset 30). <br><br>If width &gt;= 0x5FFD, then [ESP+4C] &gt;= 0x8000. <br>Sign-extending such values results in very large unsigned values, as their most significant word becomes 0xFFFF (so 0x8000 is sign-extended to 0xFFFF8000). </p><br /><p>Deeper in the code, the user controllable sign-extended value is treated as the size of a structure. <br><br>A vector of this structure is walked over:<br>[1] At each iteration the base pointer is incremented by the user's controlled sign-extended value. This means that it is possible to force the pointer to reference memory regions below the vector's VA:
+{% highlight asm %}
+ADD EAX,EDX ; EAX = vector, EDX = sign extended value{% endhighlight %}[2] At each iteration values are written to an element in the vector (a single structure) which is referenced by the incremented pointer. This means that it is possible to write to memory regions below the buffer's VA.<br><br>
+{% highlight asm %}
+MOV DWORD PTR DS:[EAX],EBX
+MOV DWORD PTR DS:[EAX+4],EBX
+MOV DWORD PTR DS:[EAX+4],EBX
+MOV DWORD PTR DS:[EAX],EBX {% endhighlight %}
+<h4>IMPACT</h4>By writing to memory regions below the buffer's VA, An attacker may overwrite crucial data such as function pointers, flags, heap structures and so forth. Doing so may allow an attacker <br>to alter the normal control flow of the application and execute arbitrary code. <br>A simple attack vector would be to lure the victim to browse to a web site controlled by the attacker, which serves a malicious QuickTime file that exploits this vulnerability.<h4>TEST ENVIRONMENT </h4>Windows XP Service Pack 3<br>QuickTime 7.6 (472)<h4>REMEDIATION</h4>A new version of QuickTime (7.6.2) has been released in order to address this issue.<h4>IDENTIFIERS</h4>1<em>. CVE-ID</em>: CVE-2009-0955<br>2. BID: 35166<h4>REFERENCES</h4>1. <a href="http://support.apple.com/kb/HT3591">Apple's advisory</a>, Apple Inc.<br>2. <a href="http://developer.apple.com/DOCUMENTATION/QuickTime/QTFF/qtff.pdf">QuickTime File Format Specification</a>, Apple Inc.<br>3. <a href="http://www.securityfocus.com/bid/35166">Apple QuickTime Image Description Atom Sign Extension Vulnerability</a>, SecurityFocus&nbsp; <br>4. <a href="http://blog.watchfire.com/wfblog/2008/09/quicktime-patch.html">QuickTime patched</a></p>

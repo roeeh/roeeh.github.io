@@ -1,0 +1,10 @@
+---
+layout: post
+title: 'Firefox for Android Vulnerabilities: Overtaking Firefox Profiles'
+date: '2014-03-27T18:36:00.000+02:00'
+author: Roee Hay
+tags: 
+modified_time: '2014-03-27T18:36:11.370+02:00'
+---
+
+We have recently discovered a series of vulnerabilities in&nbsp;Firefox for Android&nbsp;that allows a malicious application to successfully derandomize&nbsp;the Firefox profile directory name in a practical amount of time&nbsp;and then leak sensitive data (such as cookies and cached&nbsp;information) which reside in that directory, breaking Android's<br />sandbox:<br /><br  />1. <b>(CVE-2014-1516)</b> Profile Directory Name Weak Randomization.<br />2. <b>(CVE-2014-1484) </b>Profile Directory Name Leaks to Android System Log.<br />3. <b>(CVE-2014-1515) </b>Automatic File Download to SD Card.<br />4. <b>(CVE-2014-1506) </b>Crash Reporter File Manipulation.<br /><br  />The full analysis with exploitation techniques can be found in our whitepaper.</span><br /><br  />Important links<br /><br />1. Blog post:&nbsp;<a href="http://bit.ly/1drYsZp" target="_blank">http://bit.ly/1drYsZp</a><br />2. Whitepaper:&nbsp;<a href="http://slidesha.re/1gqiyD3" target="_blank">http://slidesha.re/1gqiyD3</a>

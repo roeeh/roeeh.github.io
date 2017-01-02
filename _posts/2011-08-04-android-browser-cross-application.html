@@ -1,0 +1,11 @@
+---
+layout: post
+title: Android Browser Cross-Application Scripting (CVE-2011-2357)
+date: '2011-08-04T11:45:00.002+03:00'
+author: Roee Hay
+tags: 
+modified_time: '2011-08-04T11:47:36.016+03:00'
+thumbnail: http://lh5.ggpht.com/-IAnZ2b7DECA/TjpcLc5FbYI/AAAAAAAAAyA/8hqAys1nO-s/s72-c/video5512d103fdc7%25255B12%25255D.jpg?imgmax=800
+---
+
+Recently Yair Amit and I have discovered a Cross-Application Scripting vulnerability in Android’s Browser, which allows malicious applications to bypass Android’s sandboxing model, in order to inject JavaScript code into an arbitrary domain.<br />Full details can be obtained from the following sources:   <br />1. <a href="http://blog.watchfire.com/wfblog/2011/08/android-browser-cross-application-scripting-cve-2011-2357.html">Blog post</a>    <br />2. <a href="http://blog.watchfire.com/files/advisory-android-browser.pdf">Advisory</a>    <br />3. Demo of PoC:<br /><br/><div class="wlWriterEditableSmartContent" id="scid:5737277B-5D6D-4f48-ABFC-DD9C333F4C5D:1101823e-7d7a-4761-9fe5-bd7e9c315d00" style="display: inline; float: none; margin: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;"><div id="66a9cac7-0d3e-4557-9812-879c1ddd1359" style="display: inline; margin: 0px; padding: 0px;"><div><a href="http://www.youtube.com/watch?v=BzUpbcrWufs&amp;feature=player_embedded" target="_new"><img alt="" galleryimg="no" onload="var downlevelDiv = document.getElementById('66a9cac7-0d3e-4557-9812-879c1ddd1359'); downlevelDiv.innerHTML = &quot;&lt;div&gt;&lt;object width=\&quot;448\&quot; height=\&quot;252\&quot;&gt;&lt;param name=\&quot;movie\&quot; value=\&quot;http://www.youtube.com/v/BzUpbcrWufs?hl=en&amp;hd=1\&quot;&gt;&lt;\/param&gt;&lt;embed src=\&quot;http://www.youtube.com/v/BzUpbcrWufs?hl=en&amp;hd=1\&quot; type=\&quot;application/x-shockwave-flash\&quot; width=\&quot;448\&quot; height=\&quot;252\&quot;&gt;&lt;\/embed&gt;&lt;\/object&gt;&lt;\/div&gt;&quot;;" src="http://lh5.ggpht.com/-IAnZ2b7DECA/TjpcLc5FbYI/AAAAAAAAAyA/8hqAys1nO-s/video5512d103fdc7%25255B12%25255D.jpg?imgmax=800" style="border-style: none;" /></a>

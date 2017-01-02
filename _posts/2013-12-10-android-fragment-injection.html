@@ -1,0 +1,10 @@
+---
+layout: post
+title: Android Fragment Injection
+date: '2013-12-10T23:52:00.000+02:00'
+author: Roee Hay
+tags: 
+modified_time: '2013-12-10T23:52:01.102+02:00'
+---
+
+We have recently disclosed a new vulnerability to the Android Security Team. The vulnerability affected many apps, including&nbsp;Settings&nbsp;(the one that is found on every Android device),&nbsp;Gmail, Google Now, DropBox and Evernote. To be more accurate, any App which extended the PreferenceActivity class using an exported activity was automatically vulnerable. A patch has been provided in Android KitKat. If you wondered why your code is now <a href="http://stackoverflow.com/questions/19973034/isvalidfragment-android-api-19">broken</a>, it is due to the Android KitKat patch which requires applications to override the new method, <a href="http://developer.android.com/reference/android/preference/PreferenceActivity.html#isValidFragment(java.lang.String)" >PreferenceActivity.isValidFragment</a> which has been added to the Android Framework.<br /><br />Important links:<br>1. Blog post:&nbsp;<a href="http://ibm.co/1bAA8kF" target="_blank">http://ibm.co/1bAA8kF</a><br />2. Whitepaper:&nbsp;<a href="http://ibm.co/IDm2Es" target="_blank">http://ibm.co/IDm2Es</a>

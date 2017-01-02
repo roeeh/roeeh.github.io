@@ -1,0 +1,10 @@
+---
+layout: post
+title: Attacking the Linux PRNG On Android (WOOT '14)
+date: '2014-11-01T00:30:00.000+02:00'
+author: Roee Hay
+tags: 
+modified_time: '2014-12-04T18:30:35.393+02:00'
+---
+
+We have recently presented at <a href="https://www.usenix.org/conference/woot14/workshop-program/presentation/kaplan">USENIX WOOT '14</a> and <a href="https://www.blackhat.com/eu-14/briefings.html#attacking-the-linux-prng-on-android-weaknesses-in-seeding-of-entropic-pools-and-low-boot-time-entropy">BlackHat EU '14</a>&nbsp;an attack against the Linux Pseudo-Random Number Generator (PRNG) on Android.<br /><br />The research began when we tried to exploit the <a href="http://roeehay.blogspot.co.il/2014/06/android-keystore-buffer-overflow-cve.html">keystore vulnerability</a> (CVE-2014-3100) we had discovered. Exploiting this issue requires a bypass for the stack canaries protection.<br /><br />The attack enables the adversary to predict the device's generated random numbers at early boot, This has severe security implications. For example, it allowed us to correctly guess the generated keystore canary in relatively high probability.<br /><br />The white paper is available <a href="https://www.usenix.org/system/files/conference/woot14/woot14-kaplan.pdf">here</a>.<br /><br />
