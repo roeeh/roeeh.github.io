@@ -7,7 +7,7 @@ tags:
 
 ---
 
-In the [January 2017 Android Security Bulletin](https://source.android.com/security/bulletin/2017-01-01.html#id-in-bootloader), Google has provided a patch to CVE-2016-8462, an interesting vulnerabiltiy in the Pixels' bootloader. I reported this issue to Google last December, but unfortunately got beat by Jon Sawyer ([@jcase](https://twitter.com/jcase)) and Sean Beaupre ([@firewaterdevs](https://twitter.com/firewaterdevs)), who reported it in October, so kudos to them!
+In the [January 2017 Android Security Bulletin](https://source.android.com/security/bulletin/2017-01-01.html#id-in-bootloader), Google provided a patch to CVE-2016-8462, an interesting vulnerabiltiy in the Pixels' bootloader. I reported this issue to Google last December, but unfortunately got beat by Jon Sawyer ([@jcase](https://twitter.com/jcase)) and Sean Beaupre ([@firewaterdevs](https://twitter.com/firewaterdevs)), who reported it in October, so kudos to them!
 
 
 Google Pixel's bootloader contains a proprietary fastboot oem command ('sha1sum'). This commands accepts three
