@@ -10,7 +10,7 @@ tags:
 In the [January 2017 Android Security Bulletin](https://source.android.com/security/bulletin/2017-01-01.html), Google has provided a patch to `CVE-2016-8467`.
 This is a high severity vulnerability in Nexus 6 & 6P (with a lower impact on Nexus 6P) we disclosed to Google in June which allows enabling of hidden USB interfaces. This, together with another vulnerability (`CVE-2016-6678`) we found in Nexus 6 can be combined for conducting several attacks.
 
-Together with Michael Goberman of my team, we released a paper, ["Attacking Nexus 6/6P Custom Bootmodes"](https://exchange.xforce.ibmcloud.com/collection/Attacking-Nexus-6-and-6P-Custom-Bootmodes-5985d26456a31dd4d21a7d6ee065bb1b), with all of the technical details. 
+Together with Michael Goberman of my team, we released a paper, ["Attacking Nexus 6/6P Custom Bootmodes"](https://www.docdroid.net/dxKUj5c/attacking-nexus-6-6p-custom-bootmodes.pdf.html), with all of the technical details. 
 
 The hidden USB interfaces are enabled when the bootloader inserts the `androidboot.mode` argument into the kernel command line. PC malware or a malicious charger can force the bootloader of Nexus 6/6P to boot with the special bootmode parameter if ADB is enabled on the device. The user will need to authorize the PC or charger on the device once connected, if it hasn't been permanently authorized before the attack. Then, the attacker can just issue the following commands, in order to reboot the device with the special bootmode that enables the interfaces:
 
@@ -80,4 +80,4 @@ Google rated `CVE-2016-8467` with High severity and mitigated it by forbidding a
 Google rated `CVE-2016-6678` with Moderate severity and mitigated it by commit [`3f3c8a8`](https://android.googlesource.com/kernel/msm/+/3f3c8a8313ff7995498d6e794f67650c8ba8072d). The padding is now zeroed out so uninitialized bytes won't be leaked. The patch was released as part of the [October 2016 Android Security Bulletin](https://source.android.com/security/bulletin/2016-10-01.html).
 
 
-[paper]: https://exchange.xforce.ibmcloud.com/collection/Attacking-Nexus-6-and-6P-Custom-Bootmodes-5985d26456a31dd4d21a7d6ee065bb1b "paper"
+[paper]: https://www.docdroid.net/dxKUj5c/attacking-nexus-6-6p-custom-bootmodes.pdf.html "paper"
