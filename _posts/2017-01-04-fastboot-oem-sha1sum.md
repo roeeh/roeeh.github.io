@@ -17,7 +17,7 @@ compute the preimage of the first bytes of any partition. This may allow the att
 out of the device. In addition to the first bytes, one can conduct a preimage attack of higher offsets if a specific
 pattern is (approximately) known , such as a known suffix or a prefix. 
 What you can see below is the output of two
-runs of our PoC against the board_info partition. The first run leaks bytes 0-7 ("HTC-BOAR") and the second run
+runs of my [PoC](https://github.com/roeeh/PoC/tree/master/CVE-2016-8462) against the `board_info` partition. The first run leaks bytes 0-7 ("HTC-BOAR") and the second run
 leaks bytes 158-161 ("\xA2\x80\x00\x00")
 
 {% highlight C %}
