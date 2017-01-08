@@ -7,10 +7,12 @@ tags:
 
 ---
 
-In the [January 2017 Android Security Bulletin](https://source.android.com/security/bulletin/2017-01-01.html), Google has provided a patch to `CVE-2016-8467`.
+In the [January 2017 Android Security Bulletin](https://source.android.com/security/bulletin/2017-01-01.html), Google provided a patch to `CVE-2016-8467`.
 This is a high severity vulnerability in Nexus 6 & 6P (with a lower impact on Nexus 6P) we disclosed to Google in June which allows enabling of hidden USB interfaces. This, together with another vulnerability (`CVE-2016-6678`) we found in Nexus 6 can be combined for conducting several attacks.
 
-Together with Michael Goberman of my team, we released a paper, ["Attacking Nexus 6/6P Custom Bootmodes"](https://www.docdroid.net/dxKUj5c/attacking-nexus-6-6p-custom-bootmodes.pdf.html), with all of the technical details. 
+Together with Michael Goberman of my team, we released a paper with all of the technical details:
+
+<a href="https://www.docdroid.net/dxKUj5c/attacking-nexus-6-6p-custom-bootmodes.pdf.html"><img alt="Attacking Nexus 6/6P Custom Bootmodes" title="Attacking Nexus 6/6P Custom Bootmodes" src="/images/cve-2016-8467-paper.png" width="416px" height="344px"></a>
 
 The hidden USB interfaces are enabled when the bootloader inserts the `androidboot.mode` argument into the kernel command line. PC malware or a malicious charger can force the bootloader of Nexus 6/6P to boot with the special bootmode parameter if ADB is enabled on the device. The user will need to authorize the PC or charger on the device once connected, if it hasn't been permanently authorized before the attack. Then, the attacker can just issue the following commands, in order to reboot the device with the special bootmode that enables the interfaces:
 
