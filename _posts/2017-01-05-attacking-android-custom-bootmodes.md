@@ -10,7 +10,7 @@ tags:
 In the [January 2017 Android Security Bulletin](https://source.android.com/security/bulletin/2017-01-01.html), Google provided a patch to `CVE-2016-8467`.
 This is a high severity vulnerability in Nexus 6 & 6P (with a lower impact on Nexus 6P) we disclosed to Google in June which allows enabling of hidden USB interfaces. This, together with another vulnerability (`CVE-2016-6678`) we found in Nexus 6 can be combined for conducting several attacks.
 
-Together with Michael Goberman of my team, we released a [paper] with all of the technical details:
+Together with Michael Goberman ([@MichaelGoberman](https://twitter.com/MichaelGoberman)) of my team, we released a [paper] with all of the technical details:
 
 <a href="https://www.docdroid.net/dxKUj5c/attacking-nexus-6-6p-custom-bootmodes.pdf.html"><img alt="Attacking Nexus 6/6P Custom Bootmodes" title="Attacking Nexus 6/6P Custom Bootmodes" src="/images/cve-2016-8467-paper.png" width="416px" height="344px"></a>
 
