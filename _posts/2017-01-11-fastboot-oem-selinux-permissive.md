@@ -25,4 +25,4 @@ Permissive
 OnePlus3:/ $
 {% endhighlight %}
 
-[disclosed]: https://exchange.xforce.ibmcloud.com/collection/OnePlus-3-fastboot-oem-selinux-permissive-Vulnerability-d38d8557f1a01570539151c782d52aaf "disclosed"
+[disclosed]: https://exchange.xforce.ibmcloud.com/collection/OnePlus-3-fastboot-oem-selinux-permissive-Vulnerability-38e7db09736c14198da23163cb9aa112 "disclosed"
