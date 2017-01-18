@@ -7,6 +7,8 @@ tags:
 
 ---
 
+**UPDATE (01/18/2017):** Vulnerability is fixed in OxygenOS 4.0.2.
+
 I have just [disclosed] a new vulnerability affecting One Plus 3 (and maybe 3T!) running the latest version of OxygenOS (4.0.1 at the time of writing).
 Similarly to our other recently disclosed vulnerabilities, One Plus 3's bootloader has an unsafe `fastboot oem` command which is available even if the bootloader is locked.
 
