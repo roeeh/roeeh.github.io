@@ -14,7 +14,7 @@ Similarly to our other recently disclosed vulnerabilities, One Plus 3's bootload
 
 The attacker can reboot the device into the `fastboot` mode, which could be done without any authentication -- A physical attacker can press the ‘Volume Up' button during device boot, where an attacker with ADB access can issue the `adb reboot bootloader` command.
 
-Then, the attacker can put the platform's SELinux in permissive mode, which severly weakens it,  by simply issuing:
+Then, the attacker can put the platform's SELinux in permissive mode, which severely weakens it,  by simply issuing:
 {% highlight C %}
 fastboot oem selinux permissive
 {% endhighlight %}
