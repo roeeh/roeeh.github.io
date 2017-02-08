@@ -206,6 +206,7 @@ int init_module(void)
 ```
 
 And then loaded it into the kernel:
+
 ```c
 OnePlus3:/data/local/tmp # insmod ./test.ko
 OnePlus3:/data/local/tmp # dmesg | grep Hello
