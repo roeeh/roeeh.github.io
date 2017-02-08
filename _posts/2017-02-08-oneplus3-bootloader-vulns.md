@@ -274,6 +274,7 @@ OKAY
 ```
 
 Indeed the app loads with the `priv_app` context:
+
 ```c
 1|OnePlus3:/ $ getprop | grep dm_verity
 [ro.boot.enable_dm_verity]: [0]
