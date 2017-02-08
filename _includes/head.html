@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="name" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ page.content | strip_html | xml_escape | truncate: 200 }}{% endif %}">
-  <meta name="image" content="{% if page.image %}{{ site.url }}/path/to/image/{{ page.image }}{% else %}{{ site.url }}/images/logo.png{% endif %}">
+  <meta name="image" content="{% if page.image %}{{ site.url }}/images/{{ page.image }}{% else %}{{ site.url }}/images/logo.png{% endif %}">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="@roeehay">
   <meta name="twitter:creator" content="@roeehay">
