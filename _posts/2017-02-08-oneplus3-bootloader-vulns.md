@@ -217,6 +217,7 @@ OnePlus3:/data/local/tmp # dmesg | grep Hello
 The verification of the `system` partition, as opposed to `boot` & `recovery`, is driven by `dm-verity`. What we discovered, is that one can instruct the locked bootloader to bring up the platform with `dm-verity` disabled by another fastboot command: `fastboot oem disable_dm_verity`. 
 
 The `oem disable_dm_verity` handler is as follows:
+
 ```c
 // 'oem disable_dm_verity' handler
 int sub_9183B8EC()
