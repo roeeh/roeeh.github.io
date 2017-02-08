@@ -5,7 +5,7 @@
 
 
 // Our variables
-$base-font-family: Inconsolata, "Helvetica Neue", Helvetica, FangSong, STFangsong, sans-serif;
+$base-font-family: "Open Sans", Inconsolata, "Helvetica Neue", Helvetica, FangSong, STFangsong, sans-serif;
 $code-font-family: Consolas, "Courier New", monopace, FangSong, STFangsong;
 $code-font-size: 14px;
 
@@ -52,3 +52,6 @@ $on-laptop:        800px;
         "layout",
         "syntax-highlighting"
 ;
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
