@@ -1,7 +1,7 @@
 # Site settings
 title: securityresear.ch
 baseurl: ""
-url: "https://securityresear.ch/"
+url: "https://securityresear.ch"
 
 # Build settings
 kramdown:
