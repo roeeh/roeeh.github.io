@@ -13,7 +13,7 @@ description: Security Research Blog by Roee Hay / @roeehay
 			{% for post in site.posts %}
 			<li>
 				<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-				<a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+				<a href="{% if post.layout == 'post' %}{{ post.url | prepend: site.baseurl }}{% else %}{{ post.redirect }}{% endif %}">{{ post.title }}</a>
 			</li>
 			{% endfor %}
 		</ul>
