@@ -9,5 +9,7 @@ layout: default
   <div class="post-content" itemprop="articleBody">
     {{ content }}
   </div>
+  {% unless false == page.comments %}
   {% include dq.html %}
+  {% endunless %}
 </article>
